@@ -14,7 +14,7 @@ We will use a webhook to message us in discord if any of our servers are down. A
 
 To create a webhook for a discord server go to a Discord server's settings and follow the path of "Apps > Integrations > Webhooks > New Webhook". The webhook should be created now. Click on it and then click on "Copy Url" as we need it to send messages to discord.
 
-A package, `node-fetch` has to be installed as well if your node version is less than `18`:
+We also have to make http requests in our script. There are a lot of packages available in npm but I will go with `node-fetch` in this tutorial. The `node-fetch` package only needs to be installed if your node version is less than `18` as it is build into `node` otherwise. We will install it by using the following command:
 ```bash
 npm install node-fetch
 ```
@@ -23,34 +23,35 @@ npm install node-fetch
 ```js
 import fetch from "node-fetch"
 async function postplatformstatus() {
-  let allstatuses = [
+  const allPlatforms = [
     // use any urls and check their status 
     'https://api.reinforz.ai/ping',
     'https://app.reinforz.ai',
     'https://reinforz.ai',
   ];
-  const message = []; // array containing the messages to send
-  for (const status of allstatuses) {
-    const response = await fetch(status);
+  const messages = []; // array containing the messages to send
+  for (const platform of allPlatforms) {
+    const response = await fetch(platform);
     if (response.status >= 400) {
-      const singleMessage = `${status} is down. Status: ${response.status} 🔴`
+      const singleMessage = `${platform} is down. Status: ${response.status} 🔴`
       // If any error response is recieved add it to messages
       console.log(singleMessage);
-      message.push(singleMessage);
+      messages.push(singleMessage);
     }
   }
-  const RoleId = 'copy a role ';
-  if (message.length !== 0) {
+  const ROLE_ID = '<copy a role Id from discord>';
+  if (messages.length !== 0) {
     // use the send a message to discord using the webhook URL to see if which servers are inactive.
     await fetch(
-      'the copied webhook url',
+      '<the copied webhook url>',
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          content: `<@&${RoleId}>\n${message.join('\n')}`,
+          // <@ROLE_ID> is used to notify members with a specific discord role
+          content: `<@&${ROLE_ID}>\n${messages.join('\n')}`,
         }),
       }
     );
@@ -138,7 +139,7 @@ We need 2 bash scripts in our EC2 instance. One for the cron job and another for
   cd /home/platform-status
 
   if ! (npm install --production) then
-    printf "${RED}Failed to install root dependencies${NC}\n"
+    printf "${RED}Failed to install dependencies${NC}\n"
     exit 1
   fi
   ```
