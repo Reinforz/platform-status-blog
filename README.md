@@ -4,9 +4,6 @@ Hello everyone! In this blog, we will look at how to automate the process of get
 - Using utilities like webhooks, cron jobs, SSH
 - Automating deployment to a remote host like an Amazon EC2 Instance
 
-## Table of Contents
-- [Requirements](#Requirements)
-
 ## Requirements
 Anyone with a basic knowledge of any coding languages can follow along with this blog. Having a basic knowledge of Git is recommended as well.
 
