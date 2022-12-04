@@ -144,7 +144,7 @@ Add the following in a new line and save and exit the file using `:wq`:
 This runs the script `/home/myCronScript.sh` every 7 minutes. Of course, we don't have the bash script now. So let's set them up next.
 
 ### Adding scripts
-We need 2 bash scripts in our EC2 instance. One for the cron job and another for the Deployment Script.
+We need two bash scripts in our EC2 instance: One for the cron job discussed above and another for the Deployment Script. Deployment to a production server typically involves a number of steps, such as building and packaging the application, transferring the package to the production server, and configuring the server to run the application. We need the deployment script to automate installing dependencies on our production server so that it runs without issues.
 - The cron script in `/home/myCronScript.sh`:
   ```bash
   #!/bin/bash
