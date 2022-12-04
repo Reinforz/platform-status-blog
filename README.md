@@ -32,7 +32,10 @@ async function postplatformstatus() {
   const messages = []; // array containing the messages to send
   for (const platform of allPlatforms) {
     const response = await fetch(platform);
+    // We will only notify people if an error has occurred
     if (response.status >= 400) {
+      // If the status code sent by the response is 400 or higher,
+      // then it means an error is happening and we will notify relevent people with the platform 
       const singleMessage = `${platform} is down. Status: ${response.status} 🔴`
       // If any error response is recieved add it to messages
       console.log(singleMessage);
@@ -64,25 +67,50 @@ postplatformstatus();
 > **Note**: Make an empty GitHub repository and push the new repository changes.
 
 ## Make the AWS EC2 instance
-Now we need to make an AWS EC2 instance. To learn more about how to create an EC2 instance check out the [official AWS documentation](https://docs.aws.amazon.com/efs/latest/ug/gs-step-one-create-ec2-resources.html). Of course, you can use any other remote virtual hosts other than EC2, and the following steps will be similar.
+We need a remote host to deploy the script. We are going to use an Amazon EC2 instance for this. It's important to note that while EC2 is a popular choice for hosting virtual machines in the cloud, you can use other hosting providers if you prefer. Creating an EC2 instance involves several steps, which are explained in the [official AWS documentation](https://docs.aws.amazon.com/efs/latest/ug/gs-step-one-create-ec2-resources.html). In general, you will need to select an instance type and size that meets your computing needs, configure your security and networking settings, and then launch the instance. Once your instance is running, you can connect to it using SSH or other remote access tools.
 
 ## Setup the AWS EC2 instance
 ### Logging in
-After the EC2 instance is up and running, you should be able to log in to the AWS instance using the following command:
+After the EC2 instance is up and running, we need to be able to log in to it on our local machine. We will use [SSH](https://en.wikipedia.org/wiki/Secure_Shell) to establish a cryptographic network protocol to securely connect to our remote host. To connect to the EC2 instance using SSH, you will need to do the following:
+
+1. Download and install an SSH client on your local computer. If you are using a Mac or Linux system or the latest Windows versions, you can use the built-in terminal and SSH command. Older Windows users can use a program like PuTTY.
+
+2. Locate your EC2 instance's public DNS or IP address. You can find this information in the EC2 Management Console, or by using the ec2-describe-instances command if you are using the AWS CLI.
+
+3. Use the SSH client to connect to your EC2 instance. The exact command will vary depending on your client and the operating system of your EC2 instance. For example, on a Linux or Mac system you can use the following command:
+```bash
+ssh -i /path/to/your/private/key.pem ec2-user@your-instance-public-dns
+```
+
+4. If this is your first time connecting to the instance, you may be prompted to add the host key to your local SSH known_hosts file. Type `yes` and press enter to continue.
+
+You should now be logged in to your EC2 instance and able to run commands on the remote system. It's important to note that the exact steps and commands may vary depending on the specific setup of your EC2 instance and your local computer. If you are having trouble connecting, you can check the [official AWS documentation](https://docs.aws.amazon.com/efs/latest/ug/gs-step-one-create-ec2-resources.html) or seek help from a qualified AWS professional.
+
+Also, to use the command without linking the `/path/to/your/private/key.pem` every time like:
 ```bash
 ssh ec2-user@<your-ec2-ip-address>
 ```
-We are using SSH to establish a cryptographic network protocol to securely connect to our remote host. Learn more about ssh [here](https://en.wikipedia.org/wiki/Secure_Shell). The following also needs to be added to the end of the `config` file in your `.ssh` folder.
+Add or Edit the following into the config file in your `.ssh` folder
+> **Note:** The path of the file is `C:\Users\<Username>\.ssh\config` in Windows.
 ```
 Host <your-ec2-ip-address>
     HostName <your-ec2-ip-address>
     User ec2-user
-    IdentityFile "path-to-SSH-private-key.pem"
+    IdentityFile "/path/to/your/private/key.pem"
 ```
-> **Note:** The path of the file is `C:\Users\<Username>\.ssh\config` in Windows.
+
+To get the private key .pem file that is used in the `config` file, the SSH connection process, you will need to do the following:
+
+1. In the EC2 Management Console, go to the `Key Pairs` section under the `Network & Security` menu.
+
+2. Click on the `Create Key Pair` button and give your key pair a name. This will download the private key `.pem` file to your local computer.
+
+3. Save the `.pem` file in a safe and secure location on your local computer. You will need this file to connect to your EC2 instance using SSH.
+
+It's important to note that the private key `.pem` file is essential for accessing your EC2 instance. You should treat it like a password and keep it safe and secure. If you lose the `.pem` file, you will not be able to connect to your EC2 instance. You should also never share your `.pem` file with anyone else, as it gives them access to your EC2 instance.
 
 ### Set up node
-Set up the softwares needed to run your script. I am using node so I will install it. First, I will install node version manager (nvm):
+Set up the softwares needed to run your script. I am using node so I will install it. First, I will install Node Version Manager (NVM). It is a command-line utility that allows you to install and manage multiple versions of the Node.js JavaScript runtime on a single computer. We are using NVM to allow our remote host to be able to run other Node.js programs if they require different node versions.
 ```bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
 ```
