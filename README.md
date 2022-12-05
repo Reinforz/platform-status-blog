@@ -1,5 +1,9 @@
 # How to automatically receive messages in discord when a platform is down
 
+#### Automating the process of getting notified in discord if a platform's status is down by using DevOps utilities like Webhooks, Cron jobs, SSH.
+
+## Introduction
+
 Hello everyone! In this blog, we will look at how to automate the process of getting notified in discord if a platform's status is down. It is very helpful as it notifies developers in discord when their website is down. We will learn about the following topics in this blog:
 - Using DevOps utilities like webhooks, cron jobs, SSH
 - Automating deployment to a remote host like an Amazon EC2 Instance
