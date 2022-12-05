@@ -12,9 +12,9 @@ Firstly, we need to make the script we want to run. The script will be a simple 
 ### Webhook
 We will use a webhook to message us in discord if any of our servers are down. A webhook is an HTTP-based callback function that allows lightweight, event-driven communication between 2 application programming interfaces (APIs). You can learn more about it [here](https://www.redhat.com/en/topics/automation/what-is-a-webhook).
 
-To create a webhook for a discord server go to a Discord server's settings and follow the path of "Apps > Integrations > Webhooks > New Webhook". The webhook should be created now. Click on it and then click on "Copy Url" as we need it to send messages to discord.
+To create a webhook for a discord server go to a Discord server's settings and follow the path of "`Apps` > `Integrations` > `Webhooks` > `New Webhook`". The webhook should be created now. Click on it and then click on "`Copy Url`" as we need it to send messages to discord.
 
-We also have to make http requests in our script. There are a lot of packages available in npm but I will go with `node-fetch` in this tutorial. The `node-fetch` package only needs to be installed if your node version is less than `18` as it is build into `node` otherwise. We will install it by using the following command:
+We also have to make HTTP requests in our script. There are a lot of packages available in NPM0101010101010101 but I will go with `node-fetch` in this tutorial. The `node-fetch` package only needs to be installed if your node version is less than `18` as it is build into `node` otherwise. We will install it by using the following command:
 ```bash
 npm install node-fetch
 ```
@@ -226,7 +226,7 @@ As you may have noticed, we need to add the secrets of our EC2 instance to our G
 Finally, commit and push all your changes and observe the GitHub action running in GitHub. It should run and end successfully.
 
 ## Conclusion
-Thank you for reading! If you have any questions or face any problems while doing the steps written in this blog, don't hesitate to comment down below. Also, check out our website at [reinforz.ai](https://www.reinforz.ai/).
+Thank you for reading! The github repository for containing the blog is: https://github.com/Reinforz/platform-status-blog If you have any questions or face any problems while doing the steps written in this blog, don't hesitate to comment down below. Also, check out our website at [reinforz.ai](https://www.reinforz.ai/).
 
 <div style="text-align: right; font-style: italic">
 Written by <a href="https://github.com/imoxto">Rafid Hamid</a>
