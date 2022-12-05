@@ -1,7 +1,7 @@
 # How to automatically receive messages in discord when a platform is down
 
 Hello everyone! In this blog, we will look at how to automate the process of getting notified in discord if a platform's status is down. It is very helpful as it notifies developers in discord when their website is down. We will learn about the following topics in this blog:
-- Using utilities like webhooks, cron jobs, SSH
+- Using DevOps utilities like webhooks, cron jobs, SSH
 - Automating deployment to a remote host like an Amazon EC2 Instance
 
 ## Requirements
@@ -79,7 +79,7 @@ After the EC2 instance is up and running, we need to be able to log in to it on 
 
 3. Use the SSH client to connect to your EC2 instance. The exact command will vary depending on your client and the operating system of your EC2 instance. For example, on a Linux or Mac system you can use the following command:
 ```bash
-ssh -i /path/to/your/private/key.pem ec2-user@your-instance-public-dns
+ssh -i /path/to/your/private/key.pem ec2-user@your-instance-public-ip
 ```
 
 4. If this is your first time connecting to the instance, you may be prompted to add the host key to your local SSH known_hosts file. Type `yes` and press enter to continue.
@@ -88,13 +88,13 @@ You should now be logged in to your EC2 instance and able to run commands on the
 
 Also, to use the command without linking the `/path/to/your/private/key.pem` every time like:
 ```bash
-ssh ec2-user@<your-ec2-ip-address>
+ssh ec2-user@your-instance-public-ip
 ```
 Add or Edit the following into the config file in your `.ssh` folder
 > **Note:** The path of the file is `C:\Users\<Username>\.ssh\config` in Windows.
 ```
-Host <your-ec2-ip-address>
-    HostName <your-ec2-ip-address>
+Host <your-instance-public-ip>
+    HostName <your-instance-public-ip>
     User ec2-user
     IdentityFile "/path/to/your/private/key.pem"
 ```
@@ -175,7 +175,7 @@ We need two bash scripts in our EC2 instance: One for the cron job discussed abo
 Finally, we have to find a way to upload to the remote server and run the deploy script automatically. One way to do them is to use GitHub Actions.
 GitHub Actions is a continuous integration and continuous delivery (CI/CD) platform that allows us to automate our build, test, and deployment pipeline. Check out [their documentation](https://docs.github.com/en/actions) if you want to know more about it.
 
-We are going to add a simple GitHub action to automate deploying to our EC2 instance. Add new folders `.github\workflows\` in the project working and put a file based on the following path, deploy.yml`, and add the following to the root directory:
+We are going to add a simple GitHub action to automate deploying to our EC2 instance. Add new folders `.github\workflows\` in the project directory and put a `.yml` file on the path, `.github\workflows\deploy.yml`, and add the following to it:
 ```yml
 name: Deploy Script
 
