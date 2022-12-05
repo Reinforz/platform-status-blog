@@ -14,7 +14,7 @@ We will use a webhook to message us in discord if any of our servers are down. A
 
 To create a webhook for a discord server go to a Discord server's settings and follow the path of "`Apps` > `Integrations` > `Webhooks` > `New Webhook`". The webhook should be created now. Click on it and then click on "`Copy Url`" as we need it to send messages to discord.
 
-We also have to make HTTP requests in our script. There are a lot of packages available in NPM0101010101010101 but I will go with `node-fetch` in this tutorial. The `node-fetch` package only needs to be installed if your node version is less than `18` as it is build into `node` otherwise. We will install it by using the following command:
+We also have to make HTTP requests in our script. There are a lot of packages available in NPM but I will go with `node-fetch` in this tutorial. The `node-fetch` package only needs to be installed if your node version is less than `18` as it is build into `node` otherwise. We will install it by using the following command:
 ```bash
 npm install node-fetch
 ```
