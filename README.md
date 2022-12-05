@@ -226,7 +226,7 @@ As you may have noticed, we need to add the secrets of our EC2 instance to our G
 Finally, commit and push all your changes and observe the GitHub action running in GitHub. It should run and end successfully.
 
 ## Conclusion
-Thank you for reading! The github repository for containing the blog is: https://github.com/Reinforz/platform-status-blog If you have any questions or face any problems while doing the steps written in this blog, don't hesitate to comment down below. Also, check out our website at [reinforz.ai](https://www.reinforz.ai/).
+Thank you for reading! The github repository for containing the blog is: [github.com/Reinforz/platform-status-blog](https://github.com/Reinforz/platform-status-blog). If you have any questions or face any problems while doing the steps written in this blog, don't hesitate to comment down below. Also, check out our website at [reinforz.ai](https://www.reinforz.ai/).
 
 <div style="text-align: right; font-style: italic">
 Written by <a href="https://github.com/imoxto">Rafid Hamid</a>
